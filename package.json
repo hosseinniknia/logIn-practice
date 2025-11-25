@@ -26,6 +26,8 @@
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
+    "@iconify-json/radix-icons": "^1.2.5",
+    "@iconify/vue": "^5.0.0",
     "@types/node": "^24.10.1",
     "@vitejs/plugin-vue": "^6.0.1",
     "prettier": "3.6.2",
