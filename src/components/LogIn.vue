@@ -6,7 +6,6 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 </script>
 
 <template>
-  <!-- Center the card -->
   <div class="min-h-screen flex items-center justify-center p-4 bg-background">
     <Card class="w-full max-w-md shadow-lg border rounded-xl">
       <CardHeader>
@@ -19,13 +18,13 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
             <Field>
               <FieldLabel for="username">Username</FieldLabel>
               <Input id="username" type="text" placeholder="Max Leiter" />
-              <FieldDescription> Choose a unique username for your account. </FieldDescription>
+              <FieldDescription></FieldDescription>
             </Field>
 
             <Field>
               <FieldLabel for="password">Password</FieldLabel>
               <Input id="password" type="password" placeholder="********" />
-              <FieldDescription> Must be at least 8 characters long. </FieldDescription>
+              <FieldDescription></FieldDescription>
             </Field>
           </FieldGroup>
           <Button class="w-full mt-4">Login</Button>    

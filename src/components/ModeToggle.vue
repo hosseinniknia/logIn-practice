@@ -4,7 +4,6 @@ import { useColorMode } from '@vueuse/core'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
-// Pass { disableTransition: false } to enable transitions
 const mode = useColorMode()
 </script>
 
