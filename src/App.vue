@@ -1,12 +1,10 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import LogIn from './components/LogIn.vue'
-import ModeToggle from './components/ModeToggle.vue'
+import Header from './components/layout/header.vue'
 </script>
 
 <template>
-  <router-link to="/signup">Sign Up</router-link>
-  <router-link to="/">Log In</router-link>
+  <Header></Header>
   <router-view></router-view>
-  <mode-toggle></mode-toggle>
 </template>
