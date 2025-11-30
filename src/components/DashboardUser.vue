@@ -1,5 +1,11 @@
+<script setup>
+import { useAuthStore } from '@/stores/auth'
+
+const auth = useAuthStore()
+</script>
+
 <template>
-    <h1>
-        Dummy Dashboard user
-    </h1>
+  <div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <h1 class="text-4xl font-bold">Welcome, {{ auth.user?.email || 'Guest' }}!</h1>
+  </div>
 </template>
