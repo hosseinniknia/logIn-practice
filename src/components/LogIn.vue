@@ -3,6 +3,17 @@ import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSet } from '@/com
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { ref } from 'vue'
+import { useAuth } from '@/composables/useAuth'
+
+const { login } = useAuth()
+
+const username = ref('')
+const password = ref('')
+
+function handleSubmit() {
+  login(username.value, password.value)
+}
 </script>
 
 <template>
@@ -17,17 +28,15 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
           <FieldGroup class="space-y-4">
             <Field>
               <FieldLabel for="username">Username</FieldLabel>
-              <Input id="username" type="text" placeholder="Max Leiter" />
-              <FieldDescription></FieldDescription>
+              <Input id="username" type="text" placeholder="Max Leiter" v-model="username" />
             </Field>
 
             <Field>
               <FieldLabel for="password">Password</FieldLabel>
-              <Input id="password" type="password" placeholder="********" />
-              <FieldDescription></FieldDescription>
+              <Input id="password" type="password" placeholder="********" v-model="password" />
             </Field>
           </FieldGroup>
-          <Button class="w-full mt-4">Login</Button>    
+          <Button class="w-full mt-4" @click="handleSubmit">Login</Button>
         </FieldSet>
       </CardContent>
     </Card>

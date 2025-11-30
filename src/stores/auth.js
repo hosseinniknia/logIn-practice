@@ -8,11 +8,11 @@ export const useAuthStore = defineStore('auth', {
 
 
   actions: {
-    
+
     async login(email, password) {
-      if (email === 'test@gmai;.com' && password === '12345678') {
+      if (email === 'test@test.com' && password === '123456') {
         this.user = { email }
-        this.token = 'some random token'
+        this.token = 'fake-token'
         return true
       }
       return false
