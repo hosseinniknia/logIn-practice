@@ -1,5 +1,6 @@
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
+import { loginApi, signupApi } from './api/authApi'
 
 export function useAuth() {
   const auth = useAuthStore()

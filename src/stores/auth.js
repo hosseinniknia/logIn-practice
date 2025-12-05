@@ -1,3 +1,5 @@
+import { log } from 'console'
+import { LogOut } from 'lucide-vue-next'
 import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', {
@@ -6,30 +8,17 @@ export const useAuthStore = defineStore('auth', {
     token: null,
   }),
 
-
   actions: {
-
-    async login(email, password) {
-      if (email === 'test@test.com' && password === '123456') {
-        this.user = { email }
-        this.token = 'fake-token'
-        return true
-      }
-      return false
+    setAuthData(data) {
+      this.user = data.user
+      this.user = data.token
     },
 
-    async signup(userData) {
-      this.user = { ...userData }
-      this.token = 'some random token'
-      return true
-    },
-
-    logout() {
+    LogOut() {
       this.user = null
       this.token = null
     },
   },
-
 
   getters: {
     isLoggedIn: (state) => !!state.user,
