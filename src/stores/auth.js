@@ -1,4 +1,3 @@
-import { log } from 'console'
 import { LogOut } from 'lucide-vue-next'
 import { defineStore } from 'pinia'
 

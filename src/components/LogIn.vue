@@ -17,8 +17,10 @@ function handleSubmit() {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center p-4 bg-background">
-    <Card class="w-full max-w-md shadow-lg border rounded-xl">
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <Card
+      class="w-full max-w-md p-6 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl"
+    >
       <CardHeader>
         <CardTitle class="text-center text-2xl font-semibold"> Login </CardTitle>
       </CardHeader>
