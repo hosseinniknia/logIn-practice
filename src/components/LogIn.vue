@@ -4,16 +4,31 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { ref } from 'vue'
+
+import { useForm, useField } from 'vee-validate'
+import { required, email, min } from '@vee-validate/rules'
 import { useAuth } from '@/composables/useAuth'
 
 const { login } = useAuth()
 
-const username = ref('')
-const password = ref('')
+const { handleSubmit } = useForm()
 
-function handleSubmit() {
-  login(username.value, password.value)
-}
+const { value: username, errorMessage: usernameError } = useField('username', (value) => {
+  if (!required(value)) return 'Username is required'
+  if (!email(value)) return 'Must be a valid email'
+  if (!min(value, { length: 3 })) return 'Username must be at least 3 characters'
+  return true
+})
+
+const { value: password, errorMessage: passwordError } = useField('password', (value) => {
+  if (!required(value)) return 'Password is required'
+  if (!min(value, { length: 6 })) return 'Password must be at least 6 characters'
+  return true
+})
+
+const onSubmit = handleSubmit((values) => {
+  login(values.username, values.password)
+})
 </script>
 
 <template>
@@ -29,16 +44,18 @@ function handleSubmit() {
         <FieldSet>
           <FieldGroup class="space-y-4">
             <Field>
-              <FieldLabel for="username">Username</FieldLabel>
-              <Input id="username" type="text" placeholder="Max Leiter" v-model="username" />
+              <FieldLabel for="username">Email</FieldLabel>
+              <Input id="username" type="text" placeholder="example@gmail.com" v-model="username" />
+              <p class="text-red-500 text-sm">{{ usernameError }}</p>
             </Field>
 
             <Field>
               <FieldLabel for="password">Password</FieldLabel>
               <Input id="password" type="password" placeholder="********" v-model="password" />
+              <p class="text-red-500 text-sm">{{ passwordError }}</p>
             </Field>
           </FieldGroup>
-          <Button class="w-full mt-4" @click="handleSubmit">Login</Button>
+          <Button class="w-full mt-4" type="submit" @click="onSubmit">Login</Button>
         </FieldSet>
       </CardContent>
     </Card>
