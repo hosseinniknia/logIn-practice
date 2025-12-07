@@ -6,29 +6,26 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { ref } from 'vue'
 
 import { useForm, useField } from 'vee-validate'
-import { required, email, min } from '@vee-validate/rules'
 import { useAuth } from '@/composables/useAuth'
+import { loginSchema } from '@/validation/login.validation'
 
 const { login } = useAuth()
 
-const { handleSubmit } = useForm()
-
-const { value: username, errorMessage: usernameError } = useField('username', (value) => {
-  if (!required(value)) return 'Username is required'
-  if (!email(value)) return 'Must be a valid email'
-  if (!min(value, { length: 3 })) return 'Username must be at least 3 characters'
-  return true
+const { handleSubmit } = useForm({
+  validationSchema: loginSchema,
+  validateOnValueUpdate: true,
 })
 
-const { value: password, errorMessage: passwordError } = useField('password', (value) => {
-  if (!required(value)) return 'Password is required'
-  if (!min(value, { length: 6 })) return 'Password must be at least 6 characters'
-  return true
-})
+const { value: email, errorMessage: emailError } = useField('email')
+
+const { value: password, errorMessage: passwordError } = useField('password')
 
 const onSubmit = handleSubmit((values) => {
-  login(values.username, values.password)
+  login(values.email, values.password)
 })
+
+const showPassword = ref(false)
+const togglePassword = () => (showPassword.value = !showPassword.value)
 </script>
 
 <template>
@@ -44,14 +41,44 @@ const onSubmit = handleSubmit((values) => {
         <FieldSet>
           <FieldGroup class="space-y-4">
             <Field>
-              <FieldLabel for="username">Email</FieldLabel>
-              <Input id="username" type="text" placeholder="example@gmail.com" v-model="username" />
-              <p class="text-red-500 text-sm">{{ usernameError }}</p>
+              <FieldLabel for="email">Email</FieldLabel>
+              <Input
+                id="email"
+                type="text"
+                placeholder="example@gmail.com"
+                v-model="email"
+                :class="[
+                  emailError
+                    ? 'border-red-500 focus:border-red-500 focus:ring-red-500 shadow-red-500/40 shadow-md'
+                    : 'border-white/30',
+                ]"
+              />
+              <p class="text-red-500 text-sm">{{ emailError }}</p>
             </Field>
 
             <Field>
               <FieldLabel for="password">Password</FieldLabel>
-              <Input id="password" type="password" placeholder="********" v-model="password" />
+              <div class="relative">
+                <Input
+                  :type="showPassword ? 'text' : 'password'"
+                  id="password"
+                  placeholder="********"
+                  v-model="password"
+                  :class="[
+                    passwordError
+                      ? 'border-red-500 focus:border-red-500 focus:ring-red-500 shadow-red-500/40 shadow-md'
+                      : 'border-white/30',
+                  ]"
+                />
+
+                <button
+                  type="button"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm"
+                  @click="togglePassword"
+                >
+                  {{ showPassword ? 'Hide' : 'Show' }}
+                </button>
+              </div>
               <p class="text-red-500 text-sm">{{ passwordError }}</p>
             </Field>
           </FieldGroup>
