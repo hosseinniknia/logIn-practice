@@ -7,6 +7,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { ref } from 'vue'
 import { useForm, useField } from 'vee-validate'
 import { signupSchema } from '@/validation/signup.validation'
+// import { zodResolver } from '@vee-validate/zod'
 
 const { handleSubmit } = useForm({
   validationSchema: signupSchema,

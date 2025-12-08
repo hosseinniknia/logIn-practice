@@ -1,12 +1,9 @@
-import * as Yup from 'yup'
+import * as z from 'zod'
+import { toTypedSchema } from '@vee-validate/zod'
 
-export const loginSchema = Yup.object({
-  email: Yup
-    .string()
-    .email('Please write the correct format of Email!')
-    .required('Email is required'),
-  password: Yup.string()
-    .required('No password provided.')
-    .min(8, 'Password is too short - should be 8 chars minimum.')
-    .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
-})
+export const loginSchema = toTypedSchema(
+  z.object({
+    email: z.string().email('Please write the correct format of Email!'),
+    password: z.string().min(8, 'Password is too short - should be 8 chars minimum.'),
+  }),
+)
