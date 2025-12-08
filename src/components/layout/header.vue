@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { RouterLink } from 'vue-router'
 
 import ModeToggle from '@/components/ModeToggle.vue'
@@ -14,7 +14,7 @@ const navLinks = [
 <template>
   <header class="fixed top-4 left-1/2 -translate-x-1/2 w-full md:w-5/6 lg:w-4/6 z-50">
     <div
-      class="flex items-center justify-between px-4 py-3 bg-card border border-border/60 shadow-md backdrop-blur-sm rounded-full"
+      class="flex items-center justify-between px-4 py-3 bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg rounded-full"
     >
       <RouterLink to="/" class="font-bold text-xl text-primary"> LogIn </RouterLink>
 

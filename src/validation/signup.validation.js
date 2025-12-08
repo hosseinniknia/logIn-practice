@@ -21,3 +21,4 @@ export const signupSchema = toTypedSchema(
       path: ['confirmPassword'],
     }),
 )
+

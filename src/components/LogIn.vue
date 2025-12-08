@@ -3,11 +3,33 @@ import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSet } from '@/com
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { ref } from 'vue'
+
+import { useForm, useField } from 'vee-validate'
+import { loginSchema } from '@/validation/login.validation'
+
+const { handleSubmit } = useForm({
+  validationSchema: loginSchema,
+  validateOnValueUpdate: true,
+})
+
+const { value: email, errorMessage: emailError } = useField('email')
+
+const { value: password, errorMessage: passwordError } = useField('password')
+
+const onSubmit = handleSubmit((values) => {
+  console.log(values)
+})
+
+const showPassword = ref(false)
+const togglePassword = () => (showPassword.value = !showPassword.value)
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center p-4 bg-background">
-    <Card class="w-full max-w-md shadow-lg border rounded-xl">
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <Card
+      class="w-full max-w-md p-6 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl"
+    >
       <CardHeader>
         <CardTitle class="text-center text-2xl font-semibold"> Login </CardTitle>
       </CardHeader>
@@ -16,18 +38,48 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
         <FieldSet>
           <FieldGroup class="space-y-4">
             <Field>
-              <FieldLabel for="username">Username</FieldLabel>
-              <Input id="username" type="text" placeholder="Max Leiter" />
-              <FieldDescription></FieldDescription>
+              <FieldLabel for="email">Email</FieldLabel>
+              <Input
+                id="email"
+                type="text"
+                placeholder="example@gmail.com"
+                v-model="email"
+                :class="[
+                  emailError
+                    ? 'border-red-500 focus:border-red-500 focus:ring-red-500 shadow-red-500/40 shadow-md'
+                    : 'border-white/30',
+                ]"
+              />
+              <p class="text-red-500 text-sm">{{ emailError }}</p>
             </Field>
 
             <Field>
               <FieldLabel for="password">Password</FieldLabel>
-              <Input id="password" type="password" placeholder="********" />
-              <FieldDescription></FieldDescription>
+              <div class="relative">
+                <Input
+                  :type="showPassword ? 'text' : 'password'"
+                  id="password"
+                  placeholder="********"
+                  v-model="password"
+                  :class="[
+                    passwordError
+                      ? 'border-red-500 focus:border-red-500 focus:ring-red-500 shadow-red-500/40 shadow-md'
+                      : 'border-white/30',
+                  ]"
+                />
+
+                <button
+                  type="button"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm"
+                  @click="togglePassword"
+                >
+                  {{ showPassword ? 'Hide' : 'Show' }}
+                </button>
+              </div>
+              <p class="text-red-500 text-sm">{{ passwordError }}</p>
             </Field>
           </FieldGroup>
-          <Button class="w-full mt-4">Login</Button>    
+          <Button class="w-full mt-4" type="submit" @click="onSubmit">Login</Button>
         </FieldSet>
       </CardContent>
     </Card>
