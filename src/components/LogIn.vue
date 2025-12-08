@@ -6,10 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { ref } from 'vue'
 
 import { useForm, useField } from 'vee-validate'
-import { useAuth } from '@/composables/useAuth'
 import { loginSchema } from '@/validation/login.validation'
-
-const { login } = useAuth()
 
 const { handleSubmit } = useForm({
   validationSchema: loginSchema,
@@ -21,7 +18,7 @@ const { value: email, errorMessage: emailError } = useField('email')
 const { value: password, errorMessage: passwordError } = useField('password')
 
 const onSubmit = handleSubmit((values) => {
-  login(values.email, values.password)
+  console.log(values)
 })
 
 const showPassword = ref(false)
