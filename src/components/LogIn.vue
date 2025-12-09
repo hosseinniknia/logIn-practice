@@ -7,6 +7,12 @@ import { ref } from 'vue'
 
 import { useForm, useField } from 'vee-validate'
 import { loginSchema } from '@/validation/login.validation'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+
+const auth = useAuthStore()
+
+const router = useRouter()
 
 const { handleSubmit } = useForm({
   validationSchema: loginSchema,
@@ -18,7 +24,9 @@ const { value: email, errorMessage: emailError } = useField('email')
 const { value: password, errorMessage: passwordError } = useField('password')
 
 const onSubmit = handleSubmit((values) => {
-  console.log(values)
+  auth.login(values.email, values.password)
+  console.log('Log In was successful')
+  router.push({ name: 'dashboarduser' })
 })
 
 const showPassword = ref(false)
