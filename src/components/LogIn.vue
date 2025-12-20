@@ -1,12 +1,19 @@
 <script setup>
+//shadcn components and ref
 import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { ref } from 'vue'
 
+//vee validate
 import { useForm, useField } from 'vee-validate'
 import { loginSchema } from '@/validation/login.validation'
+
+//composable
+import { useAuth } from '@/composables/useAuth'
+
+const { signIn } = useAuth()
 
 const { handleSubmit } = useForm({
   validationSchema: loginSchema,
@@ -17,8 +24,19 @@ const { value: email, errorMessage: emailError } = useField('email')
 
 const { value: password, errorMessage: passwordError } = useField('password')
 
-const onSubmit = handleSubmit((values) => {
+//submit API call
+const onSubmit = handleSubmit(async (values) => {
   console.log(values)
+  const { email, password } = values
+
+  const { data, error } = await signIn(email, password)
+
+  if (error) {
+    console.log(error)
+    return
+  }
+
+  console.log('User logged in: ', data.user.id)
 })
 
 const showPassword = ref(false)
@@ -36,7 +54,7 @@ const togglePassword = () => (showPassword.value = !showPassword.value)
 
       <CardContent>
         <FieldSet>
-          <FieldGroup class="space-y-4">
+          <FieldGroup class="space-y-2">
             <Field>
               <FieldLabel for="email">Email</FieldLabel>
               <Input
