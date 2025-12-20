@@ -2,6 +2,15 @@
 import { RouterLink, RouterView } from 'vue-router'
 import Header from './components/layout/header.vue'
 import bg from '../src/assets/images/sphere.png'
+
+import { useAuthStore } from './stores/auth';
+import { onMounted } from 'vue';
+
+const authStore = useAuthStore();
+
+onMounted(() => {
+  authStore.fetchUser();
+})
 </script>
 
 <template>
