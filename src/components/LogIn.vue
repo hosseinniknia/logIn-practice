@@ -12,6 +12,9 @@ import { loginSchema } from '@/validation/login.validation'
 
 //composable
 import { useAuth } from '@/composables/useAuth'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const { signIn } = useAuth()
 
@@ -36,6 +39,7 @@ const onSubmit = handleSubmit(async (values) => {
     return
   }
 
+  router.replace('/dashboarduser')
   console.log('User logged in: ', data.user.id)
 })
 
