@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { supabase } from '@/lib/supabase'
+import { metadata } from '@iconify-json/radix-icons/index.js'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
