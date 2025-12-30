@@ -10,7 +10,7 @@ const auth = useAuthStore()
 
 const user = computed(() => auth.user)
 
-const metadata = computed(() => auth.user.user_metadata)
+const metadata = computed(() => auth.user?.user_metadata)
 
 const logout = () => {
   auth.signOut()
