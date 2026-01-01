@@ -10,10 +10,10 @@ const auth = useAuthStore()
 
 const user = computed(() => auth.user)
 
-const metadata = computed(() => auth.user.user_metadata)
+const metadata = computed(() => auth.user?.user_metadata ?? null)
 
-const logout = () => {
-  auth.signOut()
+const logout = async () => {
+  await auth.signOut()
   router.push('/')
 }
 </script>
@@ -34,7 +34,7 @@ const logout = () => {
       <hr class="my-3 border border-white/20" />
 
       <div class="space-y-2 text-white/90">
-        <p>
+        <p v-if="user.user_metadata">
           <span class="text-white/60">Full Name:</span>
           {{ metadata?.full_name }}
         </p>
@@ -43,7 +43,7 @@ const logout = () => {
       <hr class="my-3 border border-white/20" />
 
       <div class="space-y-2 text-white/90">
-        <p>
+        <p v-if="user.user_metadata">
           <span class="text-white/60">Username:</span>
           {{ metadata?.username }}
         </p>

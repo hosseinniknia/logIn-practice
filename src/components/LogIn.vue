@@ -57,52 +57,54 @@ const togglePassword = () => (showPassword.value = !showPassword.value)
       </CardHeader>
 
       <CardContent>
-        <FieldSet>
-          <FieldGroup class="space-y-2">
-            <Field>
-              <FieldLabel for="email">Email</FieldLabel>
-              <Input
-                id="email"
-                type="text"
-                placeholder="example@gmail.com"
-                v-model="email"
-                :class="[
-                  emailError
-                    ? 'border-red-500 focus:border-red-500 focus:ring-red-500 shadow-red-500/40 shadow-md'
-                    : 'border-white/30',
-                ]"
-              />
-              <p class="text-red-500 text-sm">{{ emailError }}</p>
-            </Field>
-
-            <Field>
-              <FieldLabel for="password">Password</FieldLabel>
-              <div class="relative">
+        <form @submit.prevent="onSubmit">
+          <FieldSet>
+            <FieldGroup class="space-y-2">
+              <Field>
+                <FieldLabel for="email">Email</FieldLabel>
                 <Input
-                  :type="showPassword ? 'text' : 'password'"
-                  id="password"
-                  placeholder="********"
-                  v-model="password"
+                  id="email"
+                  type="text"
+                  placeholder="example@gmail.com"
+                  v-model="email"
                   :class="[
-                    passwordError
+                    emailError
                       ? 'border-red-500 focus:border-red-500 focus:ring-red-500 shadow-red-500/40 shadow-md'
                       : 'border-white/30',
                   ]"
                 />
+                <p class="text-red-500 text-sm">{{ emailError }}</p>
+              </Field>
 
-                <button
-                  type="button"
-                  class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm"
-                  @click="togglePassword"
-                >
-                  {{ showPassword ? 'Hide' : 'Show' }}
-                </button>
-              </div>
-              <p class="text-red-500 text-sm">{{ passwordError }}</p>
-            </Field>
-          </FieldGroup>
-          <Button class="w-full mt-4" type="submit" @click="onSubmit">Login</Button>
-        </FieldSet>
+              <Field>
+                <FieldLabel for="password">Password</FieldLabel>
+                <div class="relative">
+                  <Input
+                    :type="showPassword ? 'text' : 'password'"
+                    id="password"
+                    placeholder="********"
+                    v-model="password"
+                    :class="[
+                      passwordError
+                        ? 'border-red-500 focus:border-red-500 focus:ring-red-500 shadow-red-500/40 shadow-md'
+                        : 'border-white/30',
+                    ]"
+                  />
+
+                  <button
+                    type="button"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm"
+                    @click="togglePassword"
+                  >
+                    {{ showPassword ? 'Hide' : 'Show' }}
+                  </button>
+                </div>
+                <p class="text-red-500 text-sm">{{ passwordError }}</p>
+              </Field>
+            </FieldGroup>
+            <Button class="w-full mt-4" type="submit">Login</Button>
+          </FieldSet>
+        </form>
       </CardContent>
     </Card>
   </div>
