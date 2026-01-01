@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia'
 import { supabase } from '@/lib/supabase'
-import { metadata } from '@iconify-json/radix-icons/index.js'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     user: null,
+    session: null,
+    initialized: false,
   }),
   actions: {
     async fetchUser() {
@@ -13,13 +14,23 @@ export const useAuthStore = defineStore('auth', {
       if (error) {
         console.error('error', error)
         this.user = null
+        this.session = null
       } else {
-        this.user = data.session?.user
+        this.user = data.session?.user ?? null
+        this.session = data.session
       }
+
+      supabase.auth.onAuthStateChange((_event, session) => {
+        this.session = session
+        this.user = session?.user ?? null
+      })
+
+      this.initialized = true
     },
     async signOut() {
       await supabase.auth.signOut()
       this.user = null
+      this.session = null
     },
   },
 })
