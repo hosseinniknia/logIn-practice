@@ -1,6 +1,8 @@
 @import './base.css';
 @import "tailwindcss";
-@import "tw-animate-css";
+/* @import "tailwindcss-animate";  */
+@source "../index.html";
+@source "./**/*.{vue,js,ts,jsx,tsx}";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -136,4 +138,12 @@
 .fade-slide-leave-to {
   opacity: 0;
   transform: translateY(-8px);
+}
+
+@layer components {
+  /* This forces the toaster to behave like a floating layer */
+  .toaster.group {
+    position: fixed;
+    z-index: 9999;
+  }
 }

@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { ref } from 'vue'
+import { useAuthStore } from '@/stores/auth'
 
 //vee validate
 import { useForm, useField } from 'vee-validate'
@@ -15,6 +16,8 @@ import { useAuth } from '@/composables/useAuth'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+
+const authStore = useAuthStore()
 
 const { signIn } = useAuth()
 
@@ -35,7 +38,8 @@ const onSubmit = handleSubmit(async (values) => {
   const { data, error } = await signIn(email, password)
 
   if (error) {
-    console.log(error)
+    console.log('3. logIn eror', error)
+    authStore.error = error
     return
   }
 
