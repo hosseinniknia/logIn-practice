@@ -30,20 +30,28 @@ const { value: email, errorMessage: emailError } = useField('email')
 
 const { value: password, errorMessage: passwordError } = useField('password')
 
+const isLoading = ref(false)
+
 //submit API call
 const onSubmit = handleSubmit(async (values) => {
-  console.log(values)
   const { email, password } = values
-  const { data, error } = await signIn(email, password)
 
-  if (error) {
-    authStore.error = error
-    return
+  isLoading.value = true
+  try {
+    const { data, error } = await signIn(email, password)
+
+    if (error) {
+      authStore.error = error
+      return
+    }
+
+    authStore.handleLogInSuccess(data.session)
+    router.replace('/dashboarduser')
+  } catch (err) {
+    console.error(err)
+  } finally {
+    isLoading.value = false
   }
-
-  authStore.handleLogInSuccess(data.session)
-
-  router.replace('/dashboarduser')
 })
 
 const showPassword = ref(false)
@@ -105,7 +113,9 @@ const togglePassword = () => (showPassword.value = !showPassword.value)
                 <p class="text-red-500 text-sm">{{ passwordError }}</p>
               </Field>
             </FieldGroup>
-            <Button class="w-full mt-4" type="submit">Login</Button>
+            <Button :disabled="isLoading" class="w-full mt-4" type="submit">{{
+              isLoading ? 'Loading' : 'LogIn'
+            }}</Button>
           </FieldSet>
         </form>
       </CardContent>
