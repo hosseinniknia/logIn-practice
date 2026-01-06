@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import ProgressSpinner from 'primevue/progressspinner'
 
 //vee validate
 import { useForm, useField } from 'vee-validate'
@@ -67,8 +68,15 @@ const togglePassword = () => (showPassword.value = !showPassword.value)
         <CardTitle class="text-center text-2xl font-semibold"> Login </CardTitle>
       </CardHeader>
 
-      <CardContent>
-        <form @submit.prevent="onSubmit">
+      <CardContent class="relative">
+        <div
+          v-if="isLoading"
+          class="absolute inset-0 z-10 flex flex-col items-center justify-center p-6 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl"
+        >
+          <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" />
+          <p class="mt-4 text-sm font-medium animate-pulse text-primary">Signing you in...</p>
+        </div>
+        <form @submit.prevent="onSubmit" :class="{ 'opacity-20': isLoading }">
           <FieldSet>
             <FieldGroup class="space-y-2">
               <Field>
