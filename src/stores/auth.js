@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase'
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     user: null,
+    error: null,
     session: null,
     initialized: false,
   }),
@@ -12,9 +13,11 @@ export const useAuthStore = defineStore('auth', {
       const { data, error } = await supabase.auth.getSession()
 
       if (error) {
-        console.error('error', error)
+        console.error('1. Store recieved error:', error)
+        this.error = error
         this.user = null
         this.session = null
+        throw error
       } else {
         this.user = data.session?.user ?? null
         this.session = data.session
@@ -31,6 +34,9 @@ export const useAuthStore = defineStore('auth', {
       await supabase.auth.signOut()
       this.user = null
       this.session = null
+    },
+    resetError() {
+      this.error = null
     },
   },
 })
