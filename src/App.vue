@@ -3,7 +3,7 @@ import { RouterLink, RouterView } from 'vue-router'
 import Header from './components/layout/header.vue'
 import bg from '../src/assets/images/sphere.png'
 
-import { watch, onMounted } from 'vue'
+import { watch, onMounted, computed } from 'vue'
 import { useAuthStore } from './stores/auth'
 import { useToast } from 'primevue/usetoast'
 import Toast from 'primevue/toast'
@@ -11,23 +11,41 @@ import Toast from 'primevue/toast'
 const authStore = useAuthStore()
 const toast = useToast()
 
+const metadata = computed(() => authStore.user?.user_metadata ?? null)
+
 watch(
   () => authStore.error,
   (newError) => {
     if (newError) {
       // PrimeVue Toast format
-      toast.add({ 
-        label: 'Error',
-        severity: 'danger', 
-        summary: 'Authentication Error', 
-        detail: newError.message || 'Invalid credentials', 
-        life: 6000 
-      });
+      toast.add({
+        severity: 'error',
+        summary: 'Authentication Error',
+        detail: newError.message || 'Invalid credentials',
+        life: 6000,
+      })
 
-      authStore.resetError();
+      authStore.resetError()
     }
-  }
-);
+  },
+)
+
+watch(
+  () => authStore.isJustLoggedin,
+  (newValue) => {
+    console.log('DEBUG: isJustLoggedin changed to:', newValue)
+    if (newValue === true) {
+      toast.add({
+        severity: 'success',
+        summary: 'Wlcome!',
+        detail: `Hello ${metadata.value?.username || 'User'}, glad to see you!`,
+        life: 6000,
+      })
+      authStore.completeWelcome()
+    }
+  },
+  { immediate: true },
+)
 
 onMounted(async () => {
   try {
@@ -46,6 +64,6 @@ onMounted(async () => {
         <component :is="Component" />
       </Transition>
     </RouterView>
-    <Toast position="bottom-right"/>
+    <Toast position="bottom-right" />
   </div>
 </template>

@@ -34,17 +34,16 @@ const { value: password, errorMessage: passwordError } = useField('password')
 const onSubmit = handleSubmit(async (values) => {
   console.log(values)
   const { email, password } = values
-
   const { data, error } = await signIn(email, password)
 
   if (error) {
-    console.log('3. logIn eror', error)
     authStore.error = error
     return
   }
 
+  authStore.handleLogInSuccess(data.session)
+
   router.replace('/dashboarduser')
-  console.log('User logged in: ', data.user.id)
 })
 
 const showPassword = ref(false)

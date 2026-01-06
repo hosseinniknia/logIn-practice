@@ -7,6 +7,7 @@ export const useAuthStore = defineStore('auth', {
     error: null,
     session: null,
     initialized: false,
+    isJustLoggedin: false,
   }),
   actions: {
     async fetchUser() {
@@ -34,6 +35,15 @@ export const useAuthStore = defineStore('auth', {
       await supabase.auth.signOut()
       this.user = null
       this.session = null
+    },
+    handleLogInSuccess(userSession) {
+      this.user = userSession.user
+      this.session = userSession
+      this.isJustLoggedin = true
+      console.log('Store: Login status set to true for', this.user?.user_metadata?.username)
+    },
+    completeWelcome() {
+      this.isJustLoggedin = false
     },
     resetError() {
       this.error = null
