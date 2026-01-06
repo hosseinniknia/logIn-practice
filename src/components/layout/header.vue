@@ -1,9 +1,16 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import { computed } from 'vue'
 
 import ModeToggle from '@/components/ModeToggle.vue'
 import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
+
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
+
+const metadata = computed(() => authStore.user?.user_metadata ?? null)
 
 const navLinks = [
   { href: '/', label: 'Log In' },
@@ -16,9 +23,9 @@ const navLinks = [
     <div
       class="flex items-center justify-between px-4 py-3 bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg rounded-full"
     >
-      <RouterLink to="/" class="font-bold text-xl text-primary"> LogIn </RouterLink>
+      <RouterLink to="/" class="font-bold text-xl text-primary"> BOMBOCLAT </RouterLink>
 
-      <nav class="hidden md:flex items-center space-x-6">
+      <nav v-if="!authStore.user" class="hidden md:flex items-center space-x-6">
         <RouterLink
           v-for="link in navLinks"
           :key="link.href"
@@ -27,6 +34,10 @@ const navLinks = [
         >
           {{ link.label }}
         </RouterLink>
+      </nav>
+
+      <nav v-else class="hidden md:flex items-center space-x-6">
+        <span>Welcome, {{ metadata?.username }}</span>
       </nav>
 
       <div class="flex items-center space-x-2">
