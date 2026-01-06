@@ -27,6 +27,10 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
 
+  if (!authStore.initialized) {
+    await authStore.fetchUser()
+  }
+
   if (to.meta.requiresAuth && !authStore.user){
     next('/')
   } else if ( to.path === '/' && authStore.user) {
