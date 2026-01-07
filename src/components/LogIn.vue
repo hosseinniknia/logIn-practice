@@ -112,7 +112,7 @@ const togglePassword = () => (showPassword.value = !showPassword.value)
 
                   <button
                     type="button"
-                    class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm cursor-pointer"
                     @click="togglePassword"
                   >
                     {{ showPassword ? 'Hide' : 'Show' }}
@@ -121,7 +121,7 @@ const togglePassword = () => (showPassword.value = !showPassword.value)
                 <p class="text-red-500 text-sm">{{ passwordError }}</p>
               </Field>
             </FieldGroup>
-            <Button :disabled="isLoading" class="w-full mt-4" type="submit">{{
+            <Button :disabled="isLoading" class="w-full mt-4 cursor-pointer" type="submit">{{
               isLoading ? 'Loading' : 'LogIn'
             }}</Button>
           </FieldSet>
