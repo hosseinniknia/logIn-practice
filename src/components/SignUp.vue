@@ -141,7 +141,7 @@ const toggleConfirmPassword = () => (showConfirmPassword.value = !showConfirmPas
                   />
                   <button
                     type="button"
-                    class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm cursor-pointer"
                     @click="togglePassword"
                   >
                     {{ showPassword ? 'Hide' : 'Show' }}
@@ -165,7 +165,7 @@ const toggleConfirmPassword = () => (showConfirmPassword.value = !showConfirmPas
                   />
                   <button
                     type="button"
-                    class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm cursor-pointer"
                     @click="toggleConfirmPassword"
                   >
                     {{ showConfirmPassword ? 'Hide' : 'Show' }}
@@ -183,7 +183,7 @@ const toggleConfirmPassword = () => (showConfirmPassword.value = !showConfirmPas
             </FieldGroup>
 
             <Field class="mt-4">
-              <Button type="submit" class="w-full">Sign Up</Button>
+              <Button type="submit" class="w-full cursor-pointer">Sign Up</Button>
             </Field>
           </FieldSet>
         </form>
