@@ -51,7 +51,7 @@ const logout = async () => {
 
       <div class="mt-8">
         <button
-          class="w-full py-2 rounded-lg bg-red-500/10 hover:bg-red-500 text-white transition"
+          class="w-full py-2 rounded-lg bg-red-500/10 hover:bg-red-500 text-white transition cursor-pointer"
           @click="logout"
         >
           Logout
